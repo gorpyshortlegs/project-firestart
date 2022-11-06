@@ -15,51 +15,28 @@ export function HomeScreen({ navigation }, props) {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const SECOND_MS = 10000;
   const isFocused = useIsFocused();
-  const accountSid = config.ACCOUNT_SID;
-  const authToken = config.AUTH_TOKEN;
   const roboflow_api_key = config.ROBOFLOW_API_KEY;
-  const url = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`;
   let flareoffnum = 0;
 
 
 /* Send a message with the given body */ 
   const message = (body) => {
-    const params = new URLSearchParams();
-    params.append('Body', body);
-    params.append('To', '');
-    params.append('From','+13856660216');
     
     for (let i = 0; i < contactRemember.length; i++) {
 
       // Create parameter object to contain parameters for requests
 
       // Append the given body, the (hopefully) pre-set contact, and the twilio from section
-      params.set('To', contactRemember[i]);
+      
       
       console.log(contactRemember);
 
       // Axios post request
-      axios.post(
-
-        // URL to post the request to
-        `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
-
-        // list of params to send to the endpoint
-        params,
-
-        // authentification information
-        { 
-          auth: {
-            username: accountSid,
-            password: authToken
-          }
-        }
-
-      // if an error occurs during the post request, log the erro
-      ).catch(error => {
-        console.log(error.response)
-        }
-      );
+       
+            axios.post("https://flareon-8421.twil.io/flare-on", {
+                'to': contactRemember[i],
+                'body':body
+            });
     };
   };
 
